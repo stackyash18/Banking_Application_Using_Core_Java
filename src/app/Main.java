@@ -31,7 +31,7 @@ public class Main {
             switch(choice)
             {
                 case "1" -> openAccount(input, bankService);
-                case "2" -> depositMoney(input);
+                case "2" -> depositMoney(input, bankService);
                 case "3" -> withdrawMoney(input);
                 case "4" -> transferMoney(input);
                 case "5" -> getAccountStatement(input);
@@ -56,7 +56,7 @@ public class Main {
         String accountNumber = bankService.openAccount(name, email, accountType);
         if(initialAmount>0)
         {
-            bankService.deposit();
+            bankService.deposit(initialAmount);
         }
         System.out.println("Account Opened Successfully... \nAccount Number: " + accountNumber);
     }

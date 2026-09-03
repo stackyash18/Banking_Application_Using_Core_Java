@@ -44,7 +44,12 @@ public class BankServiceImpl implements BankService {
         account.setBalance(account.getBalance() + amount);
         Transaction transaction = new Transaction(account.getAccountNumber(),
                 amount, UUID.randomUUID().toString(), note, LocalDateTime.now(), Type.DEPOSIT);
-        transactionRepository.add()
+        transactionRepository.add(transaction);
+    }
+
+    @Override
+    public void deposit(Double initialAmount) {
+
     }
 
     private String getAccountNumber() {

@@ -11,7 +11,8 @@ public class TransactionRepository {
     private final Map<String, List<Transaction>> transactionByAccount = new HashMap<>();
 
     public void add(Transaction transaction) {
-        transactionByAccount.computeIfAbsent(transaction.getAccountNumber(),
-                k -> new ArrayList<>()).add(transaction);
+       List<Transaction> list = transactionByAccount.computeIfAbsent(transaction.getAccountNumber(),
+                k -> new ArrayList<>());
+       list.add(transaction);
     }
 }
