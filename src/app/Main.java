@@ -31,9 +31,9 @@ public class Main {
             switch(choice)
             {
                 case "1" -> openAccount(input, bankService);
-                case "2" -> depositMoney(input, bankService);
-                case "3" -> withdrawMoney(input);
-                case "4" -> transferMoney(input);
+                case "2" -> deposit(input, bankService);
+                case "3" -> withdrawMoney(input, bankService);
+                case "4" -> transferMoney(input, bankService);
                 case "5" -> getAccountStatement(input);
                 case "6" -> listAccount(input, bankService);
                 case "7" -> searchAccountByCustomerName(input);
@@ -55,7 +55,7 @@ public class Main {
         Double initialAmount = Double.valueOf(amountStr);
         String accountNumber = bankService.openAccount(name, email, accountType);
         if(initialAmount > 0)
-            bankService.deposit();
+            bankService.deposit(accountNumber, initialAmount, "Initial Deposit");
         System.out.println("Account Opened Successfully... \nYour Account Number is: " + accountNumber);
     }
 
@@ -63,16 +63,30 @@ public class Main {
     private static void deposit(Scanner input, BankService bankService) {
         System.out.print("Account Number: ");
         String  accountNumber = input.nextLine().trim();
-        System.out.print("Enter the amount(in ₹: ");
+        System.out.print("Enter the amount(in ₹): ");
         Double amount = Double.valueOf(input.nextLine().trim());
         bankService.deposit(accountNumber, amount, "Deposit");
         System.out.println("Amount deposited successfully..");
     }
 
-    private static void withdrawMoney(Scanner input) {
+    private static void withdrawMoney(Scanner input, BankService bankService) {
+        System.out.print("Account Number: ");
+        String  accountNumber = input.nextLine().trim();
+        System.out.print("Enter the amount(in ₹): ");
+        Double amount = Double.valueOf(input.nextLine().trim());
+        bankService.withdraw(accountNumber, amount, "Withdrawal");
+        System.out.println("Amount Withdrawn successfully..");
     }
 
-    private static void transferMoney(Scanner input) {
+    private static void transferMoney(Scanner input, BankService bankService) {
+        System.out.print("From Account: ");
+        String from = input.nextLine().trim();
+        System.out.print("To Account: ");
+        String to = input.nextLine().trim();
+        System.out.print("Enter the Amount: ");
+        Double amount = Double.valueOf(input.nextLine().trim());
+
+
     }
 
     private static void getAccountStatement(Scanner input) {
