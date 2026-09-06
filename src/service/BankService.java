@@ -9,7 +9,5 @@ public interface BankService {
 
     List<Account> listAccounts();
 
-    void deposit(String accountNumber, double amount, String note);
-
-    void deposit(Double initialAmount);
+    void deposit(String accountNumber, Double amount, String note);
 }

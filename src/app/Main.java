@@ -54,20 +54,19 @@ public class Main {
         String amountStr = input.nextLine().trim();
         Double initialAmount = Double.valueOf(amountStr);
         String accountNumber = bankService.openAccount(name, email, accountType);
-        if(initialAmount>0)
-        {
-            bankService.deposit(initialAmount);
-        }
-        System.out.println("Account Opened Successfully... \nAccount Number: " + accountNumber);
+        if(initialAmount > 0)
+            bankService.deposit();
+        System.out.println("Account Opened Successfully... \nYour Account Number is: " + accountNumber);
     }
 
-    private static void depositMoney(Scanner input, BankService bankService) {
+
+    private static void deposit(Scanner input, BankService bankService) {
         System.out.print("Account Number: ");
-        String accountNumber = input.nextLine().trim();
-        System.out.print("Amount: ");
-        double amount = Double.parseDouble(input.nextLine().trim());
+        String  accountNumber = input.nextLine().trim();
+        System.out.print("Enter the amount(in ₹: ");
+        Double amount = Double.valueOf(input.nextLine().trim());
         bankService.deposit(accountNumber, amount, "Deposit");
-        System.out.println("Amount: " + amount + " Deposited Successfully..");
+        System.out.println("Amount deposited successfully..");
     }
 
     private static void withdrawMoney(Scanner input) {
@@ -81,7 +80,7 @@ public class Main {
 
     private static void listAccount(Scanner input, BankService bankService) {
         bankService.listAccounts().forEach(a -> {
-            System.out.println("Account Number: " + a.getAccountNumber() + " |  Account Type:  " + a.getAccountType() + "|  Balance: " + a.getBalance());
+            System.out.println("Account Number: " + a.getAccountNumber() + " |  Account Type:  " + a.getAccountType() + " |  Balance: " + a.getBalance());
         });
     }
 

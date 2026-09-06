@@ -24,7 +24,8 @@ public class BankServiceImpl implements BankService {
 
         //change later --> 10 + 1 = AC11
 //        String accountNumber = UUID.randomUUID().toString();
-        String accountNumber = getAccountNumber();
+        int temp = accountRepository.findAll().size() + 1;
+        String accountNumber = String.format("AC%06d", temp);
         Account account = new Account(accountNumber, customerId, (double) 0, accountType);
         accountRepository.save(account);
         return accountNumber;
@@ -38,7 +39,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public void deposit(String accountNumber, double amount, String note) {
+    public void deposit(String accountNumber, Double amount, String note) {
         Account account = accountRepository.findByNumber(accountNumber)
                 .orElseThrow(() -> new RuntimeException("Account Not Found: " + accountNumber));
         account.setBalance(account.getBalance() + amount);
@@ -47,10 +48,7 @@ public class BankServiceImpl implements BankService {
         transactionRepository.add(transaction);
     }
 
-    @Override
-    public void deposit(Double initialAmount) {
 
-    }
 
     private String getAccountNumber() {
         int size = accountRepository.findAll().size() + 1;
