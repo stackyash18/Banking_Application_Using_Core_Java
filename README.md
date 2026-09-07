@@ -15,6 +15,25 @@ The main objective of this project is to apply **Core Java concepts in a practic
 The project follows a simple **layered architecture**, separating application logic, business logic, domain models, and data storage.
 
 ---
+## 🎯 Learning Objectives
+
+This project was developed to gain practical experience with:
+
+- Core Java programming
+- Object-Oriented Programming
+- Designing classes based on real-world entities
+- Interfaces and abstraction
+- Java Collections Framework
+- Service and repository layers
+- Exception handling
+- Java Stream API
+- `Optional`
+- `UUID`
+- `LocalDateTime`
+- Writing modular and maintainable Java code
+- Using Git and GitHub for version control
+
+---
 ## 🛠️ Tech Stack
 
 - **Programming Language:** Java
@@ -29,7 +48,7 @@ The project follows a simple **layered architecture**, separating application lo
 - **Version Control:** Git
 - **Repository Hosting:** GitHub
 
-  
+  ---
 ## ✨ Features
 
 ### 👤 Account Management
@@ -66,3 +85,33 @@ Example:
 
 ==========================================
 Enter your choice:
+
+
+---
+```
+
+---
+## 🚀 Future Improvements
+
+The project can be further enhanced by adding:
+
+- Complete fund transfer functionality
+- Complete account statement functionality
+- Customer search functionality
+- Persistent data storage
+- User authentication and login
+- Password/PIN management
+- Transaction history
+- Input validation improvements
+
+---
+
+## 📚 Project Type
+
+| Category | Details |
+|---|---|
+| **Type** | Console-Based Application |
+| **Language** | Java |
+| **Architecture** | Layered Architecture |
+| **Storage** | In-Memory (`HashMap`) |
+| **Level** | Core Java / Beginner–Intermediate |
