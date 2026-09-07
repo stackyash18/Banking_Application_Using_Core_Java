@@ -15,7 +15,21 @@ The main objective of this project is to apply **Core Java concepts in a practic
 The project follows a simple **layered architecture**, separating application logic, business logic, domain models, and data storage.
 
 ---
+## 🛠️ Tech Stack
 
+- **Programming Language:** Java
+- **Java Version:** Java 17+
+- **Application Type:** Console-Based / CLI Application
+- **Architecture:** Layered Architecture
+- **Data Storage:** In-Memory Storage
+- **Collections:** HashMap, List
+- **Java APIs:** UUID, LocalDateTime, Optional, Stream API
+- **Exception Handling:** Java Exception Handling
+- **Development Tools:** IntelliJ IDEA / VS Code
+- **Version Control:** Git
+- **Repository Hosting:** GitHub
+
+  
 ## ✨ Features
 
 ### 👤 Account Management
