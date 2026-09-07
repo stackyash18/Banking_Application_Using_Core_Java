@@ -38,13 +38,13 @@ This project was developed to gain practical experience with:
 
 - **Programming Language:** Java
 - **Java Version:** Java 17+
-- **Application Type:** Console-Based / CLI Application
+- **Application Type:** Console-Based Application
 - **Architecture:** Layered Architecture
 - **Data Storage:** In-Memory Storage
 - **Collections:** HashMap, List
 - **Java APIs:** UUID, LocalDateTime, Optional, Stream API
 - **Exception Handling:** Java Exception Handling
-- **Development Tools:** IntelliJ IDEA / VS Code
+- **Development Tools:** IntelliJ IDEA
 - **Version Control:** Git
 - **Repository Hosting:** GitHub
 
