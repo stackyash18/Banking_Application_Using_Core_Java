@@ -32,11 +32,11 @@ public class Main {
             {
                 case "1" -> openAccount(input, bankService);
                 case "2" -> deposit(input, bankService);
-                case "3" -> withdrawMoney(input, bankService);
-                case "4" -> transferMoney(input, bankService);
-                case "5" -> getAccountStatement(input);
+                case "3" -> withdraw(input, bankService);
+                case "4" -> transfer(input, bankService);
+                case "5" -> getAccountStatement(input, bankService);
                 case "6" -> listAccount(input, bankService);
-                case "7" -> searchAccountByCustomerName(input);
+                case "7" -> searchAccounts(input);
                 case "0" -> running = false;
             }
         }
@@ -69,7 +69,7 @@ public class Main {
         System.out.println("Amount deposited successfully..");
     }
 
-    private static void withdrawMoney(Scanner input, BankService bankService) {
+    private static void withdraw(Scanner input, BankService bankService) {
         System.out.print("Account Number: ");
         String  accountNumber = input.nextLine().trim();
         System.out.print("Enter the amount(in ₹): ");
@@ -78,18 +78,23 @@ public class Main {
         System.out.println("Amount Withdrawn successfully..");
     }
 
-    private static void transferMoney(Scanner input, BankService bankService) {
+    private static void transfer(Scanner input, BankService bankService) {
         System.out.print("From Account: ");
         String from = input.nextLine().trim();
         System.out.print("To Account: ");
         String to = input.nextLine().trim();
         System.out.print("Enter the Amount: ");
         Double amount = Double.valueOf(input.nextLine().trim());
-
+        bankService.transfer(from, to, amount, "Transfer");
 
     }
 
-    private static void getAccountStatement(Scanner input) {
+    private static void getAccountStatement(Scanner input, BankService bankService) {
+        System.out.print("Enter Your Account Number: ");
+        String accountNumber = input.nextLine().trim();
+        bankService.getStatement(accountNumber).forEach(t -> {
+            System.out.println(t.getTimeStamp() + " | " + t.getType() + " | " + t.getAmount() + " | " + t.getNote());
+        });
     }
 
     private static void listAccount(Scanner input, BankService bankService) {
@@ -98,6 +103,9 @@ public class Main {
         });
     }
 
-    private static void searchAccountByCustomerName(Scanner input) {
+    private static void searchAccountsByCustomerName(Scanner input, BankService bankService) {
+        System.out.println("Customer Name contains: ");
+        String p = input.nextLine().trim();
+        bankService.searchAccountsByCustomerName(p);
     }
 }
