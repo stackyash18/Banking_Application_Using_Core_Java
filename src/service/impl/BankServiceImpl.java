@@ -102,12 +102,10 @@ public class BankServiceImpl implements BankService {
         for(Customer c : customerRepository.findAll()) {
             if(c.getName().toLowerCase().contains(query))
             {
-                result.addAll(AccountRepository.findByCustomerId(c.getId()));
+                result.addAll(accountRepository.findByCustomerId(c.getId()));
             }
         }
         result.sort(Comparator.comparing(Account::getAccountNumber));
-
-      ;
         return result;
     }
 

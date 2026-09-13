@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomerRepository {
-    private final Map<String, Customer> customerById = new HashMap<>();
+    private final Map<String, Customer> customersById = new HashMap<>();
 
     public List<Customer> findAll() {
-        return new ArrayList<>(customerById.values());
+        return new ArrayList<>(customersById.values());
     }
 }

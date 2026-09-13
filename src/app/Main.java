@@ -3,8 +3,6 @@ package app;
 import service.BankService;
 import service.impl.BankServiceImpl;
 
-import javax.swing.plaf.DimensionUIResource;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -34,9 +32,9 @@ public class Main {
                 case "2" -> deposit(input, bankService);
                 case "3" -> withdraw(input, bankService);
                 case "4" -> transfer(input, bankService);
-                case "5" -> getAccountStatement(input, bankService);
+                case "5" -> getStatement(input, bankService);
                 case "6" -> listAccount(input, bankService);
-                case "7" -> searchAccounts(input);
+                case "7" -> searchAccountsByCustomerName(input, bankService);
                 case "0" -> running = false;
             }
         }
@@ -86,10 +84,11 @@ public class Main {
         System.out.print("Enter the Amount: ");
         Double amount = Double.valueOf(input.nextLine().trim());
         bankService.transfer(from, to, amount, "Transfer");
+        System.out.println("The amount has been transferred successfully from the account: " + from + "\nto the account: " + to);
 
     }
 
-    private static void getAccountStatement(Scanner input, BankService bankService) {
+    private static void getStatement(Scanner input, BankService bankService) {
         System.out.print("Enter Your Account Number: ");
         String accountNumber = input.nextLine().trim();
         bankService.getStatement(accountNumber).forEach(t -> {
@@ -106,6 +105,8 @@ public class Main {
     private static void searchAccountsByCustomerName(Scanner input, BankService bankService) {
         System.out.println("Customer Name contains: ");
         String p = input.nextLine().trim();
-        bankService.searchAccountsByCustomerName(p);
+        bankService.searchAccountsByCustomerName(p).forEach(account ->
+                System.out.println(account.getAccountNumber() + " | " + account.getAccountType() + " | " + account.getBalance())
+        );
     }
 }
