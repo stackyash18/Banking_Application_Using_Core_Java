@@ -89,8 +89,8 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public List<Transaction> getStatement(String accountNumber) {
-        return transactionRepository.findByAccount(accountNumber).stream()
+    public List<Transaction> getStatement(String account) {
+        return transactionRepository.findByAccount(account).stream()
                 .sorted(Comparator.comparing(Transaction::getTimeStamp))
                 .collect(Collectors.toList());
     }

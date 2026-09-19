@@ -90,8 +90,8 @@ public class Main {
 
     private static void getStatement(Scanner input, BankService bankService) {
         System.out.print("Enter Your Account Number: ");
-        String accountNumber = input.nextLine().trim();
-        bankService.getStatement(accountNumber).forEach(t -> {
+        String account = input.nextLine().trim();
+        bankService.getStatement(account).forEach(t -> {
             System.out.println(t.getTimeStamp() + " | " + t.getType() + " | " + t.getAmount() + " | " + t.getNote());
         });
     }
