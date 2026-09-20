@@ -3,7 +3,7 @@ package domain;
 import java.time.LocalDateTime;
 
 public class Transaction {
-    public static String getAccountNumber;
+    private String getAccountNumber;
     private String transactionId;
     private Type type;
     private String accountNumber;
@@ -20,6 +20,14 @@ public class Transaction {
         this.note = note;
     }
 
+    public Transaction(String accountNumber, Double amount, String transactionId, String note, LocalDateTime timeStamp, Type type) {
+        this.accountNumber = accountNumber;
+        this.amount = amount;
+        this.transactionId = transactionId;
+        this.note = note;
+        this.timeStamp = timeStamp;
+        this.type = type;
+    }
 
     public String getTransactionId() {
         return transactionId;
@@ -69,11 +77,5 @@ public class Transaction {
         this.note = note;
     }
 
-    public Transaction(String accountNumber, double amount, String string, String note) {
 
-    }
-
-    public Transaction(String accountNumber, double amount, String string, String note, LocalDateTime now, Type type) {
-
-    }
 }

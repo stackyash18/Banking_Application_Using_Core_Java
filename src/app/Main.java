@@ -50,7 +50,8 @@ public class Main {
         String accountType = input.nextLine().trim();
         System.out.print("Initial deposit(Optional, leave it for 0): ");
         String amountStr = input.nextLine().trim();
-        Double initialAmount = Double.valueOf(amountStr);
+        if(amountStr.isBlank()) amountStr = "0";
+        double initialAmount = Double.parseDouble(amountStr);
         String accountNumber = bankService.openAccount(name, email, accountType);
         if(initialAmount > 0)
             bankService.deposit(accountNumber, initialAmount, "Initial Deposit");
@@ -89,8 +90,9 @@ public class Main {
     }
 
     private static void getStatement(Scanner input, BankService bankService) {
-        System.out.print("Enter Your Account Number: ");
+        System.out.print("Enter you account number: ");
         String account = input.nextLine().trim();
+        String note = input.nextLine().trim();
         bankService.getStatement(account).forEach(t -> {
             System.out.println(t.getTimeStamp() + " | " + t.getType() + " | " + t.getAmount() + " | " + t.getNote());
         });
@@ -105,6 +107,7 @@ public class Main {
     private static void searchAccountsByCustomerName(Scanner input, BankService bankService) {
         System.out.println("Customer Name contains: ");
         String p = input.nextLine().trim();
+        System.out.printf("Account with the name similar to %s  \n", p);
         bankService.searchAccountsByCustomerName(p).forEach(account ->
                 System.out.println(account.getAccountNumber() + " | " + account.getAccountType() + " | " + account.getBalance())
         );

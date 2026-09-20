@@ -4,11 +4,16 @@ import domain.Account;
 import domain.Customer;
 import domain.Transaction;
 import domain.Type;
+import exceptions.AccountNotFoundException;
+import exceptions.InsufficientFundException;
+import exceptions.ValidationException;
 import repository.AccountRepository;
 import repository.CustomerRepository;
 import repository.TransactionRepository;
 import service.BankService;
+import util.Validation;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,9 +24,34 @@ public class BankServiceImpl implements BankService {
     private final TransactionRepository transactionRepository = new TransactionRepository();
     private final CustomerRepository customerRepository = new CustomerRepository();
 
+    private final Validation<String> validateName = name -> {
+        if(name == null || name.isBlank()) throw new ValidationException("Name is required");
+    };
+
+    private final Validation<String> validateEmail = email -> {
+            if(email == null || !email.contains("@")) throw new ValidationException("Email is required");
+    };
+
+    private final Validation<String> validateAccountType = type -> {
+        if(type == null || !(type.equalsIgnoreCase("SAVINGS") || !type.equalsIgnoreCase("CURRENT")))
+            throw new ValidationException("Type must be SAVINGS or CURRENT");
+    };
+
+    private final Validation<Double> validateAmountPositive = amount -> {
+        if(amount == null || amount < 0)
+            throw new ValidationException("Amount must be positive");
+    };
+
     @Override
     public String openAccount(String name, String email, String accountType) {
+        validateName.validate(name);
+        validateEmail.validate(email);
+        validateAccountType.validate(accountType);
+
+        // Create customer
         String customerId = UUID.randomUUID().toString();
+        Customer c = new Customer(customerId, name, email);
+        customerRepository.save(c);
 
         //change later --> 10 + 1 = AC11
 //        String accountNumber = UUID.randomUUID().toString();
@@ -41,8 +71,9 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void deposit(String accountNumber, Double amount, String note) {
+        validateAmountPositive.validate(amount);
         Account account = accountRepository.findByNumber(accountNumber)
-                .orElseThrow(() -> new RuntimeException("Account Not Found: " + accountNumber));
+                .orElseThrow(() -> new AccountNotFoundException("Account Not Found: " + accountNumber));
         account.setBalance(account.getBalance() + amount);
         Transaction transaction = new Transaction(account.getAccountNumber(),
                 amount, UUID.randomUUID().toString(), note, LocalDateTime.now(), Type.DEPOSIT);
@@ -51,11 +82,12 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void withdraw(String accountNumber, Double amount, String note) {
+        validateAmountPositive.validate(amount);
         Account account = accountRepository.findByNumber(accountNumber)
-                .orElseThrow(() -> new RuntimeException("Account Not Found: " + accountNumber));
+                .orElseThrow(() -> new InsufficientFundException("Account Not Found: " + accountNumber));
         if(account.getBalance().compareTo(amount) < 0)
         {
-            throw new RuntimeException("Insufficient Balance");
+            throw new InsufficientFundException("Insufficient Balance");
         }
         account.setBalance(account.getBalance() - amount);
         Transaction transaction = new Transaction(account.getAccountNumber(),
@@ -66,15 +98,16 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void transfer(String fromAcc , String toAcc, Double amount, String note) {
+        validateAmountPositive.validate(amount);
         if(fromAcc.equals(toAcc))
-            throw new RuntimeException("Cannot transfer to your own account.");
+            throw new ValidationException("Cannot transfer to your own account.");
 
         Account from = accountRepository.findByNumber(fromAcc)
-                .orElseThrow(() -> new RuntimeException("Account Not Found: " + fromAcc));
+                .orElseThrow(() -> new AccountNotFoundException("Account Not Found: " + fromAcc));
         Account to = accountRepository.findByNumber(toAcc)
-                .orElseThrow(() -> new RuntimeException("Account Not Found: " + toAcc));
+                .orElseThrow(() -> new AccountNotFoundException("Account Not Found: " + toAcc));
         if(from.getBalance().compareTo(amount) < 0)
-            throw new RuntimeException("Insufficient Balance");
+            throw new InsufficientFundException("Insufficient Balance");
 
         from.setBalance(from.getBalance() - amount);
         to.setBalance(to.getBalance() +  amount);
@@ -108,7 +141,6 @@ public class BankServiceImpl implements BankService {
         result.sort(Comparator.comparing(Account::getAccountNumber));
         return result;
     }
-
 
     private String getAccountNumber() {
         int size = accountRepository.findAll().size() + 1;
